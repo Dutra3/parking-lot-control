@@ -1,12 +1,16 @@
 package com.api.parkingcontrol.models;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "tb_parking_spot")
 public class ParkingSpot implements Serializable {
 
