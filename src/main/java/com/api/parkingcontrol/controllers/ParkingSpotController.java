@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -45,5 +47,14 @@ public class ParkingSpotController {
     @GetMapping
     public ResponseEntity<List<ParkingSpot>> getAllParkingSpots() {
         return ResponseEntity.ok(service.findAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getOneParkingSpot(@PathVariable UUID id) {
+        Optional<ParkingSpot> parkingSpot = service.findById(id);
+
+        return parkingSpot.<ResponseEntity<Object>>map(spot -> ResponseEntity.status(HttpStatus.OK).body(spot)).orElseGet(
+                () -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Parking Spot not found.")
+        );
     }
 }
