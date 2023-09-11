@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -37,7 +38,7 @@ public class ParkingSpot implements Serializable {
     private String colorCar;
 
     @Column(nullable = false)
-    private String registrationDate;
+    private LocalDateTime registrationDate;
 
     @Column(nullable = false, length = 130)
     private String responsibleName;
