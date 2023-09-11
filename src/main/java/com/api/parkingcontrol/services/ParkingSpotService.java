@@ -42,4 +42,9 @@ public class ParkingSpotService {
     public Optional<ParkingSpot> findById(UUID id) {
         return repository.findById(id);
     }
+
+    @Transactional
+    public void delete(ParkingSpot parkingSpot) {
+        repository.delete(parkingSpot);
+    }
 }
