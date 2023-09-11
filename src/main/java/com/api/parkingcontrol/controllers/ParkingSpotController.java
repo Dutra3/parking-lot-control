@@ -61,11 +61,26 @@ public class ParkingSpotController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable UUID id) {
         Optional<ParkingSpot> parkingSpot = service.findById(id);
-        if (!parkingSpot.isPresent()) {
+        if (parkingSpot.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Parking Spot not found.");
         }
         service.delete(parkingSpot.get());
 
         return ResponseEntity.status(HttpStatus.OK).body("Parking Spot deleted successfully.");
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> update(@PathVariable UUID id, @RequestBody @Valid ParkingSpotDTO parkingSpotDTO) {
+        Optional<ParkingSpot> parkingSpot = service.findById(id);
+        if (parkingSpot.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Parking Spot not found.");
+        }
+
+        ParkingSpot parkingSpotFinal = new ParkingSpot();
+        BeanUtils.copyProperties(parkingSpotDTO, parkingSpotFinal);
+        parkingSpotFinal.setId(parkingSpot.get().getId());
+        parkingSpotFinal.setRegistrationDate(parkingSpot.get().getRegistrationDate());
+
+        return ResponseEntity.status(HttpStatus.OK).body(service.save(parkingSpotFinal));
     }
 }
