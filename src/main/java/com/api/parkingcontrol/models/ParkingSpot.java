@@ -42,5 +42,5 @@ public class ParkingSpot implements Serializable {
     private String apartment;
 
     @Column(nullable = false, length = 30)
-    private String block;
+    private String tower;
 }
